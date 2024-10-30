@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Clock, RefreshCcw, Globe } from "lucide-react";
 import { FocusedDetails } from "../types";
+import Edit_or_delete from "./edit_or_delete";
+// import Edit_or_delete from "./edit_or_delete";
 
 const FocusedTable = () => {
   const [selectedUrls, setSelectedUrls] = useState<string[]>([]);
-
-  const sampleData: FocusedDetails = {
+  const [Table_Data, setTableData] = useState<FocusedDetails>({
     blocked_pages: [
       { url: "facebook.com", time_remaining: 30, allocated_time: 60 },
       { url: "twitter.com", time_remaining: 45, allocated_time: 90 },
@@ -15,13 +16,16 @@ const FocusedTable = () => {
       show_suggestions: false,
     },
     authenticated: true,
-  };
+  });
+  useEffect(() => {
+    console.log(selectedUrls);
+  }, [selectedUrls]);
 
   const handleSelectAll = () => {
-    if (selectedUrls.length === sampleData.blocked_pages.length) {
+    if (selectedUrls.length === Table_Data.blocked_pages.length) {
       setSelectedUrls([]);
     } else {
-      setSelectedUrls(sampleData.blocked_pages.map((page) => page.url));
+      setSelectedUrls(Table_Data.blocked_pages.map((page) => page.url));
     }
   };
 
@@ -36,6 +40,12 @@ const FocusedTable = () => {
 
   return (
     <div className="table-container">
+      <Edit_or_delete
+        Table_Data={Table_Data}
+        setTable_Data={setTableData}
+        selectedUrls={selectedUrls}
+        setSelectedUrls={setSelectedUrls}
+      />
       <table className="focus-table">
         <thead>
           <tr className="header-row">
@@ -44,7 +54,7 @@ const FocusedTable = () => {
                 type="checkbox"
                 className="checkbox"
                 checked={
-                  selectedUrls.length === sampleData.blocked_pages.length
+                  selectedUrls.length === Table_Data.blocked_pages.length
                 }
                 onChange={handleSelectAll}
               />{" "}
@@ -76,7 +86,7 @@ const FocusedTable = () => {
           </tr>
         </thead>
         <tbody>
-          {sampleData.blocked_pages.map((page, index) => (
+          {Table_Data.blocked_pages.map((page, index) => (
             <tr key={index} className="table-row">
               <td className="table-cell">
                 <input
@@ -101,12 +111,12 @@ const FocusedTable = () => {
       <style>
         {`
           .table-container {
-            width: 100%;
-          }
+            width: 70%;
+            }
           
           .focus-table {
             width: 100%;
-            min-width: 100%;
+            min-width: 50%;
             background-color: white;
             border: 1px solid #e5e7eb;
           }
