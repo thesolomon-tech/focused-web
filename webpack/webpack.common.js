@@ -6,7 +6,7 @@ const srcDir = path.join(__dirname, "..", "src");
 module.exports = {
   entry: {
     page: path.join(srcDir, "page/page.tsx"),
-    background: path.join(srcDir, "background.ts"),
+    background: path.join(srcDir, "background/background.ts"),
     content_script: path.join(srcDir, "content_script/content_script.ts"),
     outOfTime: path.join(srcDir, "outOfTimePage/main.tsx"),
   },
