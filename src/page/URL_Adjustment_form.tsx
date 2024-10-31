@@ -16,13 +16,9 @@ const URL_Adjustment_form = (props: URL_Adjustment_form_props) => {
   const [timeAllocated, setTimeAllocated] = useState<number>(0);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !website ||
-      !validateURL(website) ||
-      !timeAllocated ||
-      timeAllocated <= 0
-    ) {
+    if (!website || !validateURL(website) || timeAllocated < 0) {
       console.log("incorrect values entered");
+      console.log(timeAllocated);
       return;
     }
     try {
@@ -32,6 +28,7 @@ const URL_Adjustment_form = (props: URL_Adjustment_form_props) => {
           (element) => element.url != props.selectedUrls[0]
         );
       }
+      updated_urls = updated_urls.filter((element)=> element.url!=website);
       updated_urls.push({
         url: website,
         time_remaining: 0,
@@ -105,7 +102,7 @@ const URL_Adjustment_form = (props: URL_Adjustment_form_props) => {
             onChange={(e) => setTimeAllocated(parseInt(e.target.value))}
             placeholder="Enter time in minutes"
             required
-            min="1"
+            min="0"
             style={{
               width: "100%",
               padding: "8px",

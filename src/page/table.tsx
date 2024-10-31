@@ -2,21 +2,36 @@ import React, { useEffect, useState } from "react";
 import { Clock, RefreshCcw, Globe } from "lucide-react";
 import { FocusedDetails } from "../types";
 import Edit_or_delete from "./edit_or_delete";
-// import Edit_or_delete from "./edit_or_delete";
+import { get_from_storage } from "../communications";
 
 const FocusedTable = () => {
   const [selectedUrls, setSelectedUrls] = useState<string[]>([]);
   const [Table_Data, setTableData] = useState<FocusedDetails>({
-    blocked_pages: [
-      { url: "facebook.com", time_remaining: 30, allocated_time: 60 },
-      { url: "twitter.com", time_remaining: 45, allocated_time: 90 },
-    ],
-    youtube_settings: {
-      show_comments: false,
-      show_suggestions: false,
-    },
-    authenticated: true,
+    blocked_pages: [],
+    youtube_settings: { show_comments: false, show_suggestions: false },
+    authenticated: false,
   });
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchTableData = async () => {
+    try {
+      const obtained_from_storage = await get_from_storage();
+      setSelectedUrls([]);
+      if (obtained_from_storage == false) {
+        return;
+      } else {
+        setTableData(obtained_from_storage);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching table data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTableData();
+  }, []);
+
   useEffect(() => {
     console.log(selectedUrls);
   }, [selectedUrls]);
@@ -38,6 +53,10 @@ const FocusedTable = () => {
     });
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="table-container">
       <Edit_or_delete
@@ -54,6 +73,7 @@ const FocusedTable = () => {
                 type="checkbox"
                 className="checkbox"
                 checked={
+                  Table_Data.blocked_pages.length > 0 &&
                   selectedUrls.length === Table_Data.blocked_pages.length
                 }
                 onChange={handleSelectAll}

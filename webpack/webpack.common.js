@@ -7,7 +7,8 @@ module.exports = {
   entry: {
     page: path.join(srcDir, "page/page.tsx"),
     background: path.join(srcDir, "background.ts"),
-    content_script: path.join(srcDir, "content_script/content_script.tsx"),
+    content_script: path.join(srcDir, "content_script/content_script.ts"),
+    outOfTime: path.join(srcDir, "outOfTimePage/main.tsx"),
   },
   output: {
     path: path.join(__dirname, "../dist/js"),

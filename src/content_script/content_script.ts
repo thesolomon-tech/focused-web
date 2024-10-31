@@ -7,3 +7,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     sendResponse("Color message is none.");
   }
 });
+
+
+//This page will be used for Youtube customisations

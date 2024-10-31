@@ -1,5 +1,5 @@
 chrome.action.onClicked.addListener((tab) => {
   chrome.tabs.create({
-    url: chrome.runtime.getURL("page.html")
+    url: chrome.runtime.getURL("page.html"),
   });
 });
