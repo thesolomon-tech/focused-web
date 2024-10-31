@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import { FocusedDetails } from "../types";
 import SimplePopup from "./Popup";
 import URL_Adjustment_form from "./URL_Adjustment_form";
-interface editURL_props {
+interface createURL_props {
   selectedUrls: string[];
   setSelectedUrls: React.Dispatch<React.SetStateAction<string[]>>;
   Table_Data: FocusedDetails;
   setTable_Data: React.Dispatch<React.SetStateAction<FocusedDetails>>;
 }
 
-export default function EditURL({
+export default function CreateURL({
   selectedUrls,
   setSelectedUrls,
   Table_Data,
   setTable_Data,
-}: editURL_props) {
+}: createURL_props) {
   const [Popup, openPopup] = useState<boolean>(false);
 
   return (
@@ -25,14 +25,14 @@ export default function EditURL({
           setSelectedUrls={setSelectedUrls}
           Table_Data={Table_Data}
           setTable_Data={setTable_Data}
-          Mode="edit"
+          Mode="create"
           setPopup={openPopup}
         />
       </SimplePopup>
       <button
         onClick={() => openPopup((popup) => !popup)}
         style={{
-          backgroundColor: "blue",
+          backgroundColor: "green",
           color: "white",
           padding: "8px 16px",
           border: "none",
@@ -40,7 +40,7 @@ export default function EditURL({
           cursor: "pointer",
         }}
       >
-        Edit
+        Create
       </button>
     </>
   );

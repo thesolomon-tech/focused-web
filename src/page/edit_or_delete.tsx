@@ -2,6 +2,7 @@ import React from "react";
 import DeleteURL from "./deleteURL";
 import { FocusedDetails } from "../types";
 import EditURL from "./editURL";
+import CreateURL from "./createURL";
 interface edit_or_delete_props {
   selectedUrls: string[];
   setSelectedUrls: React.Dispatch<React.SetStateAction<string[]>>;
@@ -45,7 +46,17 @@ const Edit_or_delete = ({
         </div>
       );
     }
-    return <></>;
+  } else {
+    return (
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <CreateURL
+          Table_Data={Table_Data}
+          setTable_Data={setTable_Data}
+          selectedUrls={selectedUrls}
+          setSelectedUrls={setSelectedUrls}
+        />
+      </div>
+    );
   }
   return <></>;
 };

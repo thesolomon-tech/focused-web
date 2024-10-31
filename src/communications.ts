@@ -20,3 +20,11 @@ export const set_to_storage = async (
     throw error;
   }
 };
+
+
+export const debug_storage = async () => {
+  const details_from_storage = await get_from_storage();
+  console.log("storage contents:\n")
+  console.log(details_from_storage);
+  console.log("Done  \n\n\n")
+};

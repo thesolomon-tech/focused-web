@@ -1,5 +1,6 @@
+import { debug_storage, set_to_storage } from "../communications";
 import { FocusedDetails } from "../types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface URL_Adjustment_form_props {
   selectedUrls: string[];
@@ -7,15 +8,47 @@ interface URL_Adjustment_form_props {
   Table_Data: FocusedDetails;
   setTable_Data: React.Dispatch<React.SetStateAction<FocusedDetails>>;
   Mode: "create" | "edit";
+  setPopup: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const URL_Adjustment_form = (props: URL_Adjustment_form_props) => {
   const [website, setWebsite] = useState("");
-  const [timeAllocated, setTimeAllocated] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const [timeAllocated, setTimeAllocated] = useState<number>(0);
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic will go here
+    if (
+      !website ||
+      !validateURL(website) ||
+      !timeAllocated ||
+      timeAllocated <= 0
+    ) {
+      console.log("incorrect values entered");
+      return;
+    }
+    try {
+      let updated_urls = props.Table_Data.blocked_pages;
+      if (props.Mode == "edit") {
+        updated_urls = props.Table_Data.blocked_pages.filter(
+          (element) => element.url != props.selectedUrls[0]
+        );
+      }
+      updated_urls.push({
+        url: website,
+        time_remaining: 0,
+        allocated_time: timeAllocated,
+      });
+      console.log(updated_urls);
+      const new_focused_details = props.Table_Data;
+      new_focused_details.blocked_pages = updated_urls;
+      await set_to_storage(new_focused_details);
+      props.setTable_Data(new_focused_details);
+      console.log(props.Table_Data.blocked_pages);
+      props.setSelectedUrls([]);
+      props.setPopup(false);
+      await debug_storage();
+    } catch {
+      return;
+    }
   };
 
   return (
@@ -44,11 +77,10 @@ const URL_Adjustment_form = (props: URL_Adjustment_form_props) => {
             Website:
           </label>
           <input
-            type="url"
-            id="website"
+            type="text"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
-            placeholder="Enter website URL"
+            placeholder="Enter website URL e.g. google.com or https://google.com"
             required
             style={{
               width: "100%",
@@ -70,7 +102,7 @@ const URL_Adjustment_form = (props: URL_Adjustment_form_props) => {
             type="number"
             id="timeAllocated"
             value={timeAllocated}
-            onChange={(e) => setTimeAllocated(e.target.value)}
+            onChange={(e) => setTimeAllocated(parseInt(e.target.value))}
             placeholder="Enter time in minutes"
             required
             min="1"
@@ -103,3 +135,11 @@ const URL_Adjustment_form = (props: URL_Adjustment_form_props) => {
 };
 
 export default URL_Adjustment_form;
+
+//irrespective of https:// checks if something is probably a url
+const validateURL = (url: string) => {
+  const urlPattern =
+    /^(https?:\/\/)?([\w-]+(\.[\w-]+)+\/?)([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/;
+
+  return urlPattern.test(url);
+};
