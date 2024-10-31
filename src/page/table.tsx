@@ -18,6 +18,7 @@ const FocusedTable = () => {
       const obtained_from_storage = await get_from_storage();
       setSelectedUrls([]);
       if (obtained_from_storage == false) {
+        setIsLoading(false);
         return;
       } else {
         setTableData(obtained_from_storage);

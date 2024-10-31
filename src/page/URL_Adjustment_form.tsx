@@ -1,6 +1,6 @@
 import { debug_storage, set_to_storage } from "../communications";
 import { FocusedDetails } from "../types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 interface URL_Adjustment_form_props {
   selectedUrls: string[];
@@ -28,9 +28,11 @@ const URL_Adjustment_form = (props: URL_Adjustment_form_props) => {
           (element) => element.url != props.selectedUrls[0]
         );
       }
-      updated_urls = updated_urls.filter((element)=> element.url!=website);
+      updated_urls = updated_urls.filter(
+        (element) => element.url != website.toLowerCase()
+      );
       updated_urls.push({
-        url: website,
+        url: website.toLowerCase(),
         time_remaining: 0,
         allocated_time: timeAllocated,
       });
