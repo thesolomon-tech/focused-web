@@ -71,7 +71,7 @@ const OutOfTimePage = () => {
           <p style={styles.text}>You've reached your time limit on:</p>
           <p style={styles.url}>{originalUrl}</p>
           <div style={styles.text}>
-            <p>Come back tomorrow!</p>
+            {/* <p>Come back tomorrow!</p> */}
           </div>
         </div>
       </div>

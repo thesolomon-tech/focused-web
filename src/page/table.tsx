@@ -86,24 +86,6 @@ const FocusedTable = () => {
                 Website
               </div>
             </th>
-            <th className="table-header">
-              <div className="header-content">
-                <Clock className="icon" />
-                Time Remaining
-              </div>
-            </th>
-            <th className="table-header">
-              <div className="header-content">
-                <Clock className="icon" />
-                Time Allocated
-              </div>
-            </th>
-            <th className="table-header">
-              <div className="header-content">
-                <RefreshCcw className="icon" />
-                Reset
-              </div>
-            </th>
           </tr>
         </thead>
         <tbody>
@@ -118,13 +100,6 @@ const FocusedTable = () => {
                 />{" "}
               </td>
               <td className="table-cell">{page.url}</td>
-              <td className="table-cell">{page.time_remaining} min</td>
-              <td className="table-cell">{page.allocated_time} min</td>
-              <td className="table-cell">
-                <button className="reset-button">
-                  <RefreshCcw className="icon" />
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>

@@ -1,4 +1,4 @@
-# Chrome Extension TypeScript Starter
+# Focused Web (No Timer Variant)
 
 ![build](https://github.com/chibat/chrome-extension-typescript-starter/workflows/build/badge.svg)
 
