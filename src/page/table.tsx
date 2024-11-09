@@ -8,7 +8,7 @@ const FocusedTable = () => {
   const [selectedUrls, setSelectedUrls] = useState<string[]>([]);
   const [Table_Data, setTableData] = useState<FocusedDetails>({
     blocked_pages: [],
-    youtube_settings: { show_comments: false, show_suggestions: false },
+    youtube_settings: { hide_comments: false, enabled: true },
     authenticated: false,
   });
   const [isLoading, setIsLoading] = useState(true);
