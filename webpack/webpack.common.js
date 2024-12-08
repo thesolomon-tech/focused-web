@@ -9,6 +9,8 @@ module.exports = {
     background: path.join(srcDir, "background/background.ts"),
     content_script: path.join(srcDir, "content_script/content_script.ts"),
     outOfTime: path.join(srcDir, "outOfTimePage/main.tsx"),
+    focused_youtube_homepage: path.join(srcDir, "focused_youtube_homepage/main.tsx"),
+
   },
   output: {
     path: path.join(__dirname, "../dist/js"),
