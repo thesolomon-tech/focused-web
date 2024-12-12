@@ -34,12 +34,14 @@ const remove_video_items = () => {
 
 const remove_homepage_items = () => {
     console.log("running on homepage");
-    const remove_suggestions = document.getElementById("page-manager");
-    if (remove_suggestions) {
-        remove_suggestions.remove();
+    const remove_suggestions = document.getElementsByTagName(
+        "ytd-rich-grid-renderer",
+    );
+    if (remove_suggestions[0]) {
+        remove_suggestions[0].remove();
         console.log("Element removed successfully");
     } else {
-        console.log("page manager element not found");
+        console.log("Element with ID 'secondary' not found");
     }
     const remove_comments = document.getElementById(
         "sections",
