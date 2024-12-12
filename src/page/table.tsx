@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Clock, RefreshCcw, Globe } from "lucide-react";
+import { Clock, Globe, RefreshCcw } from "lucide-react";
 import { FocusedDetails } from "../types";
 import Edit_or_delete from "./edit_or_delete";
 import { get_from_storage } from "../communications";
@@ -8,7 +8,11 @@ const FocusedTable = () => {
   const [selectedUrls, setSelectedUrls] = useState<string[]>([]);
   const [Table_Data, setTableData] = useState<FocusedDetails>({
     blocked_pages: [],
-    youtube_settings: { show_comments: false, show_suggestions: false },
+    youtube_settings: {
+      show_comments: false,
+      show_suggestions: false,
+      on: true,
+    },
     authenticated: false,
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -73,12 +77,11 @@ const FocusedTable = () => {
               <input
                 type="checkbox"
                 className="checkbox"
-                checked={
-                  Table_Data.blocked_pages.length > 0 &&
-                  selectedUrls.length === Table_Data.blocked_pages.length
-                }
+                checked={Table_Data.blocked_pages.length > 0 &&
+                  selectedUrls.length === Table_Data.blocked_pages.length}
                 onChange={handleSelectAll}
-              />{" "}
+              />
+              {" "}
             </th>
             <th className="table-header">
               <div className="header-content">
@@ -96,8 +99,10 @@ const FocusedTable = () => {
                   type="checkbox"
                   className="checkbox"
                   checked={selectedUrls.includes(page.url)}
-                  onChange={() => handleRowSelect(page.url)}
-                />{" "}
+                  onChange={() =>
+                    handleRowSelect(page.url)}
+                />
+                {" "}
               </td>
               <td className="table-cell">{page.url}</td>
             </tr>

@@ -13,4 +13,5 @@ export interface BlockedPage {
 export interface YSettings {
   show_comments: boolean;
   show_suggestions: boolean;
+  on: boolean;
 }

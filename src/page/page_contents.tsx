@@ -24,6 +24,7 @@ const Page_contents = () => {
           </h3>
           {table ? <FocusedTable /> : null}
         </div>
+        
       </div>
     </>
   );

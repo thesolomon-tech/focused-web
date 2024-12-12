@@ -1,12 +1,18 @@
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  if (msg.color) {
-    console.log("Receive color = " + msg.color);
-    document.body.style.backgroundColor = msg.color;
-    sendResponse("Change color to " + msg.color);
-  } else {
-    sendResponse("Color message is none.");
+import remove_yt_items from "./removers";
+
+document.addEventListener("DOMContentLoaded", remove_yt_items);
+window.addEventListener("load", remove_yt_items);
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "visible") {
+    remove_yt_items();
   }
 });
+const observer = new MutationObserver(() => {
+  remove_yt_items();
+});
 
-
-//This page will be used for Youtube customisations
+// Start observing
+observer.observe(document.documentElement || document.body, {
+  childList: true,
+  subtree: true,
+});

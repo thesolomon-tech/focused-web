@@ -41,7 +41,7 @@ export const establish_sitecheck_listeners = () => {
 
 const check_url = async (url: string, tabID: number) => {
   if (formatURL(url) == "https://www.youtube.com") {
-    open_custom_youtube_page(url, tabID);
+    console.log("youtube detected");
   } else {
     await checkIfTimeUp(url, tabID);
   }
@@ -52,9 +52,14 @@ export const checkIfTimeUp = async (url: string, tabId: number) => {
     // console.log("Current URL:", url);
     // console.log("Formatted Current URL:", formatURL(url));
     // console.log("Stored URLs:", formatURL(stored_urls.blocked_pages[0].url));
-
     const matching_url = stored_urls.blocked_pages.find(
-      (blocked_page) => formatURL(blocked_page.url) === formatURL(url),
+      (blocked_page) => {
+        // console.table({
+        //   blocked_page: formatURL(blocked_page.url),
+        //   testing: formatURL(url),
+        // });
+        return formatURL(url).startsWith(formatURL(blocked_page.url));
+      },
     );
     if (matching_url) {
       console.log("matching");
@@ -86,10 +91,14 @@ const open_custom_youtube_page = (url: string, tabId: number) => {
   urlParams.set("originalUrl", url);
 
   chrome.tabs.update(tabId, {
-    url: `${chrome.runtime.getURL("focused_youtube_homepage.html")}?${urlParams.toString()}`,
+    url: `${
+      chrome.runtime.getURL("focused_youtube_homepage.html")
+    }?${urlParams.toString()}`,
   });
   console.log(
-    `${chrome.runtime.getURL("focused_youtube_homepage.html")}?${urlParams.toString()}`,
+    `${
+      chrome.runtime.getURL("focused_youtube_homepage.html")
+    }?${urlParams.toString()}`,
   );
 };
 
